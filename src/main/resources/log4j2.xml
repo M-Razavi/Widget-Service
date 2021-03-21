@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern=" %d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName} --- [%15.15t] %-40.40c{1.} : %m%n%ex"/>
+        </Console>
+
+        <Console name="SlowConsole" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} %clr{:}{faint} %m%n%xwEx"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <AsyncLogger name="com.miro" level="info" additivity="false">
+            <AppenderRef ref="SlowConsole"/>
+        </AsyncLogger>
+
+        <Root level="info">
+            <AppenderRef ref="SlowConsole"/>
+        </Root>
+    </Loggers>
+</Configuration>
