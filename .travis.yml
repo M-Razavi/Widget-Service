@@ -6,3 +6,9 @@ before_install:
   - chmod +x mvnw
 after_success:
   - mvn -Pcoveralls -DTRAVIS_JOB_ID=$TRAVIS_JOB_ID clean test jacoco:report coveralls:report
+deploy:
+  provider: heroku
+  api-key: $HEROKU_API_KEY
+  app: simple-widget-board
+  on:
+    all_branches: true
