@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping(path = {"api/v1/widgets"}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = {"api/v1/widgets"}, produces = MediaType.APPLICATION_JSON_VALUE)
 @Validated
 public class WidgetController {
 
@@ -60,7 +60,7 @@ public class WidgetController {
     @Operation(summary = "Create a new widget")
     @ApiResponse(responseCode = "201", description = "widget is created",
         content = {@Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = WidgetDto.class))})
-    @PostMapping()
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<WidgetDto> create(@Valid @RequestBody WidgetDto widgetDto) {
         Widget widget = mapper.dtoToWidgetCreate(widgetDto);
         final Widget createdWidget = service.create(widget);
@@ -72,7 +72,7 @@ public class WidgetController {
     @ApiResponses(value = {@ApiResponse(responseCode = "204", description = "Deleted the Widget",
         content = {@Content(mediaType = APPLICATION_JSON_VALUE)}),
         @ApiResponse(responseCode = "404", description = "Widget not found", content = @Content)})
-    @DeleteMapping(path = "/{widgetId}", consumes = {MediaType.ALL_VALUE})
+    @DeleteMapping(path = "/{widgetId}")
     public ResponseEntity<Void> delete(@PathVariable(value = ID) @Min(1) Long widgetId) {
         if (service.exist(widgetId)) {
             service.delete(widgetId);
@@ -87,7 +87,7 @@ public class WidgetController {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Widget was updated",
         content = {@Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = WidgetDto.class))}),
         @ApiResponse(responseCode = "404", description = "Widget not found", content = @Content)})
-    @PutMapping(path = "/{widgetId}")
+    @PutMapping(path = "/{widgetId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<WidgetDto> update(
         @PathVariable(value = ID) @Min(1) Long id,
         @Valid @RequestBody WidgetDto widgetDto) {
@@ -101,7 +101,7 @@ public class WidgetController {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Found the Widget",
         content = {@Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = WidgetDto.class))}),
         @ApiResponse(responseCode = "404", description = "Widget not found", content = @Content)})
-    @GetMapping(path = "/{widgetId}", consumes = {MediaType.ALL_VALUE})
+    @GetMapping(path = "/{widgetId}")
     public ResponseEntity<WidgetDto> getWidget(@PathVariable(value = ID) @Min(1) Long widgetId) {
         final Widget widget = service.findById(widgetId).orElseThrow(NotFoundException::new);
         return ResponseEntity.ok(mapper.widgetToDto(widget));
@@ -110,7 +110,7 @@ public class WidgetController {
     @Operation(summary = "Returns a list of widgets")
     @ApiResponse(responseCode = "200", description = "Returns a list of widgets",
         content = {@Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = WidgetDto.class))})
-    @GetMapping(consumes = {MediaType.ALL_VALUE})
+    @GetMapping
     public ResponseEntity<Page<WidgetDto>> getWidgets(@RequestParam(defaultValue = "0") int page,
                                                       @RequestParam(defaultValue = "10") Integer size) {
 

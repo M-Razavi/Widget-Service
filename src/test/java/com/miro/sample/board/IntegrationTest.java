@@ -80,8 +80,7 @@ class IntegrationTest implements WidgetBoardTest {
         long id = widgetDto.getId();
 
         mvc.perform(
-            get(BASE_URL + "/" + id)
-                .contentType(APPLICATION_JSON))
+            get(BASE_URL + "/" + id))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(id))
@@ -144,24 +143,21 @@ class IntegrationTest implements WidgetBoardTest {
             .andReturn();
 
         mvc.perform(
-            get(BASE_URL + "/" + widgetDto1.getId())
-                .contentType(APPLICATION_JSON))
+            get(BASE_URL + "/" + widgetDto1.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(jsonPath("$.z").value(widgetDto1.getZ()))
             .andReturn();
 
         mvc.perform(
-            get(BASE_URL + "/" + widgetDto2.getId())
-                .contentType(APPLICATION_JSON))
+            get(BASE_URL + "/" + widgetDto2.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(jsonPath("$.z").value(3))
             .andReturn();
 
         mvc.perform(
-            get(BASE_URL + "/" + widgetDto3.getId())
-                .contentType(APPLICATION_JSON))
+            get(BASE_URL + "/" + widgetDto3.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(jsonPath("$.z").value(4))
@@ -182,31 +178,28 @@ class IntegrationTest implements WidgetBoardTest {
 
         mvc.perform(
             get(BASE_URL + "/" + widgetDto1.getId())
-                .contentType(APPLICATION_JSON))
+        )
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(jsonPath("$.z").value(widgetDto1.getZ()))
             .andReturn();
 
         mvc.perform(
-            get(BASE_URL + "/" + newWidgetDto.getId())
-                .contentType(APPLICATION_JSON))
+            get(BASE_URL + "/" + newWidgetDto.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(jsonPath("$.z").value(newZIndex))
             .andReturn();
 
         mvc.perform(
-            get(BASE_URL + "/" + widgetDto2.getId())
-                .contentType(APPLICATION_JSON))
+            get(BASE_URL + "/" + widgetDto2.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(jsonPath("$.z").value(3))
             .andReturn();
 
         mvc.perform(
-            get(BASE_URL + "/" + widgetDto3.getId())
-                .contentType(APPLICATION_JSON))
+            get(BASE_URL + "/" + widgetDto3.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(jsonPath("$.z").value(4))
@@ -226,24 +219,21 @@ class IntegrationTest implements WidgetBoardTest {
         assertEquals(newZIndex, newWidgetDto.getZ());
 
         mvc.perform(
-            get(BASE_URL + "/" + widgetDto1.getId())
-                .contentType(APPLICATION_JSON))
+            get(BASE_URL + "/" + widgetDto1.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(jsonPath("$.z").value(widgetDto1.getZ()))
             .andReturn();
 
         mvc.perform(
-            get(BASE_URL + "/" + widgetDto2.getId())
-                .contentType(APPLICATION_JSON))
+            get(BASE_URL + "/" + widgetDto2.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(jsonPath("$.z").value(widgetDto2.getZ()))
             .andReturn();
 
         mvc.perform(
-            get(BASE_URL + "/" + widgetDto3.getId())
-                .contentType(APPLICATION_JSON))
+            get(BASE_URL + "/" + widgetDto3.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(jsonPath("$.z").value(widgetDto3.getZ()))
@@ -264,24 +254,21 @@ class IntegrationTest implements WidgetBoardTest {
         assertEquals(newZIndex, newWidgetDto.getZ());
 
         mvc.perform(
-            get(BASE_URL + "/" + widgetDto1.getId())
-                .contentType(APPLICATION_JSON))
+            get(BASE_URL + "/" + widgetDto1.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(jsonPath("$.z").value(widgetDto1.getZ()))
             .andReturn();
 
         mvc.perform(
-            get(BASE_URL + "/" + widgetDto2.getId())
-                .contentType(APPLICATION_JSON))
+            get(BASE_URL + "/" + widgetDto2.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(jsonPath("$.z").value(3))
             .andReturn();
 
         mvc.perform(
-            get(BASE_URL + "/" + widgetDto3.getId())
-                .contentType(APPLICATION_JSON))
+            get(BASE_URL + "/" + widgetDto3.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(jsonPath("$.z").value(widgetDto3.getZ()))
@@ -307,8 +294,7 @@ class IntegrationTest implements WidgetBoardTest {
             .andExpect(status().isOk());
 
         this.mvc.perform(
-            get(BASE_URL + "/" + id)
-                .contentType(APPLICATION_JSON))
+            get(BASE_URL + "/" + id))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(id))
@@ -365,13 +351,11 @@ class IntegrationTest implements WidgetBoardTest {
         long id = widgetDto.getId();
 
         mvc.perform(
-            delete(BASE_URL + "/" + id)
-                .contentType(APPLICATION_JSON))
+            delete(BASE_URL + "/" + id))
             .andExpect(status().isNoContent());
 
         mvc.perform(
-            get(BASE_URL + "/" + id)
-                .contentType(APPLICATION_JSON))
+            get(BASE_URL + "/" + id))
             .andExpect(status().isNotFound());
     }
 

@@ -150,9 +150,7 @@ class WidgetControllerTest implements WidgetBoardTest {
         Mockito.when(service.findById(widgetDto.getId())).thenReturn(java.util.Optional.of(widget));
         Mockito.when(widgetMapper.widgetToDto(any())).thenReturn(widgetDto);
 
-        String contentAsString = mvc.perform(get(BASE_URL + "/" + widgetDto.getId())
-            .content(objectMapper.writeValueAsBytes(widgetDto))
-            .contentType(MediaType.APPLICATION_JSON))
+        String contentAsString = mvc.perform(get(BASE_URL + "/" + widgetDto.getId()))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andReturn().getResponse().getContentAsString();
@@ -180,9 +178,7 @@ class WidgetControllerTest implements WidgetBoardTest {
         Mockito.when(service.findAll(anyInt(), anyInt())).thenReturn(widgetPage);
         Mockito.when(widgetMapper.widgetToDtoList(any())).thenReturn(List.of(widgetDto));
 
-        mvc.perform(get(BASE_URL)
-            .content(objectMapper.writeValueAsBytes(widgetDto))
-            .contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(get(BASE_URL))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(jsonPath("$.totalElements").value(1))
@@ -204,8 +200,7 @@ class WidgetControllerTest implements WidgetBoardTest {
         Long id = 1L;
         Mockito.when(service.findById(id)).thenReturn(java.util.Optional.empty());
 
-        mvc.perform(get(BASE_URL + "/" + id)
-            .contentType(MediaType.APPLICATION_JSON_VALUE))
+        mvc.perform(get(BASE_URL + "/" + id))
             .andExpect(MockMvcResultMatchers.status().isNotFound())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andReturn();
@@ -214,8 +209,7 @@ class WidgetControllerTest implements WidgetBoardTest {
     @Test
     void deleteWidget_success() throws Exception {
         Mockito.doReturn(true).when(service).exist(any());
-        mvc.perform(delete(BASE_URL + "/1")
-            .contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(delete(BASE_URL + "/1"))
             .andExpect(MockMvcResultMatchers.status().isNoContent())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andReturn();
@@ -224,8 +218,7 @@ class WidgetControllerTest implements WidgetBoardTest {
     @Test
     void deleteWidget_notFound() throws Exception {
         Mockito.doReturn(false).when(service).exist(any());
-        mvc.perform(delete(BASE_URL + "/1")
-            .contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(delete(BASE_URL + "/1"))
             .andExpect(MockMvcResultMatchers.status().isNotFound())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andReturn();
@@ -234,8 +227,7 @@ class WidgetControllerTest implements WidgetBoardTest {
     @Test
     void deleteWidget_invalidId() throws Exception {
         Mockito.doReturn(false).when(service).exist(any());
-        mvc.perform(delete(BASE_URL + "/0")
-            .contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(delete(BASE_URL + "/0"))
             .andExpect(MockMvcResultMatchers.status().isBadRequest())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andReturn();
