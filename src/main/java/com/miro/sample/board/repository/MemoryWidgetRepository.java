@@ -1,16 +1,7 @@
 package com.miro.sample.board.repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.ConcurrentNavigableMap;
-import java.util.concurrent.ConcurrentSkipListMap;
-import java.util.concurrent.atomic.AtomicLong;
-import javax.persistence.EntityNotFoundException;
-
 import com.miro.sample.board.model.Widget;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
@@ -19,6 +10,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ConcurrentNavigableMap;
+import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 
 /**
@@ -154,6 +154,14 @@ public class MemoryWidgetRepository implements WidgetRepository {
     public void delete(Widget widget) {
         Widget deleted = widgetsById.remove(widget.getId());
         widgetsByZ.remove(deleted.getZ());
+    }
+
+    @Transactional
+    public void deleteAllById(Iterable<? extends Long> longs) {
+        for (Long id : longs) {
+            Widget deleted = widgetsById.remove(id);
+            widgetsByZ.remove(deleted.getZ());
+        }
     }
 
     /**

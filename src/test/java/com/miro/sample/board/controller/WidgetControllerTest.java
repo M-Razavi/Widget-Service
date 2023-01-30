@@ -1,21 +1,5 @@
 package com.miro.sample.board.controller;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.verify;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-
-import java.util.List;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.miro.sample.board.WidgetBoardTest;
 import com.miro.sample.board.dto.WidgetDto;
@@ -24,7 +8,6 @@ import com.miro.sample.board.model.Widget;
 import com.miro.sample.board.service.WidgetService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +17,26 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-@ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = WidgetController.class)
+import java.util.List;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.verify;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+
+//@ExtendWith(SpringExtension.class)
+@WebMvcTest
+@ContextConfiguration(classes = {WidgetController.class, GeneralExceptionHandler.class})
 class WidgetControllerTest implements WidgetBoardTest {
 
     private static final String BASE_URL = "/api/v1/widgets";
@@ -91,10 +88,10 @@ class WidgetControllerTest implements WidgetBoardTest {
         WidgetDto widgetDto = new WidgetDto();
 
         mvc.perform(post(BASE_URL)
-            .content(objectMapper.writeValueAsBytes(widgetDto))
-            .contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(MockMvcResultMatchers.status().isBadRequest())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .content(objectMapper.writeValueAsBytes(widgetDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
             .andReturn();
     }
 
@@ -228,8 +225,8 @@ class WidgetControllerTest implements WidgetBoardTest {
     void deleteWidget_invalidId() throws Exception {
         Mockito.doReturn(false).when(service).exist(any());
         mvc.perform(delete(BASE_URL + "/0"))
-            .andExpect(MockMvcResultMatchers.status().isBadRequest())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andReturn();
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andReturn();
     }
 }

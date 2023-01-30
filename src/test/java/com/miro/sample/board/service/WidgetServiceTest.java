@@ -1,26 +1,10 @@
 package com.miro.sample.board.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
-import javax.validation.ConstraintViolationException;
-
 import com.miro.sample.board.WidgetBoardTest;
 import com.miro.sample.board.exceptions.NotFoundException;
 import com.miro.sample.board.model.Widget;
 import com.miro.sample.board.repository.WidgetRepository;
+import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -29,6 +13,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Pageable;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 class WidgetServiceTest implements WidgetBoardTest {
@@ -140,7 +136,6 @@ class WidgetServiceTest implements WidgetBoardTest {
 
         List<Widget> widgetList = List.of(widget1, widget2, widget3, widget4, widget5, widget6);
 
-        System.out.println(widgetList.toString());
         List<CompletableFuture<Void>> futures = new ArrayList<>(threadCount * insertPerThread);
         for (int i = 0; i < threadCount; i++) {
             CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {

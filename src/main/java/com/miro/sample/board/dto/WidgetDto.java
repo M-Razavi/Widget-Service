@@ -1,20 +1,22 @@
 package com.miro.sample.board.dto;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class WidgetDto implements Serializable {
+    @Serial
     private static final long serialVersionUID = 7860506206722471520L;
 
     private Long id;

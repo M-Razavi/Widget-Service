@@ -1,11 +1,14 @@
 package com.miro.sample.board.repository;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import com.miro.sample.board.WidgetBoardTest;
+import com.miro.sample.board.model.Widget;
+import jakarta.validation.constraints.NotNull;
+import org.apache.commons.collections4.IterableUtils;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,21 +17,13 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import javax.validation.constraints.NotNull;
 
-import com.miro.sample.board.WidgetBoardTest;
-import com.miro.sample.board.model.Widget;
-import org.apache.commons.collections4.IterableUtils;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.orm.ObjectOptimisticLockingFailureException;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 class MemoryWidgetRepositoryTest implements WidgetBoardTest {
 
-    private WidgetRepository repository = new MemoryWidgetRepository();
+    private final WidgetRepository repository = new MemoryWidgetRepository();
 
     @BeforeEach
     void setUp() {
@@ -225,7 +220,7 @@ class MemoryWidgetRepositoryTest implements WidgetBoardTest {
     @Test
     void findAllByOrderByZAsc() {
         List<Widget> widgets = List.of(newWidget(1), newWidget(0), newWidget(-1));
-        List<Widget> savedWidgets = IterableUtils.toList(repository.saveAll(widgets));
+        IterableUtils.toList(repository.saveAll(widgets));
 
         Iterable<Widget> allByOrderByZAsc = repository.findAllByOrderByZAsc();
         Iterator<Widget> iterator = allByOrderByZAsc.iterator();
