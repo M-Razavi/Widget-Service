@@ -28,7 +28,7 @@ Widget attributes should be not null
 The API gauid could be found http://127.0.0.1:8080/swagger-ui.html
   
 ### Technologies  
-    Java 11
+    Java 17
     Spring boot & Rest
     Junit5
     Mockito And MockMVC
