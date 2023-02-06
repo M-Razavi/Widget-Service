@@ -1,12 +1,15 @@
-FROM eclipse-temurin:17.0.4.1_1-jre-alpine@sha256:e1506ba20f0cb2af6f23e24c7f8855b417f0b085708acd9b85344a884ba77767 AS builder
+FROM maven:3.8.6-eclipse-temurin-17-alpine@sha256:6a53f197f7bdfdf56e50c03cdb9f82a339ca3ded4eae867834e4bcfa7276a832 AS builder
 WORKDIR application
-ARG JAR_FILE
-COPY target/${JAR_FILE} app.jar
+COPY pom.xml .
+COPY src src
+RUN mvn package -DskipTests
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
 RUN java -Djarmode=layertools -jar app.jar extract
 
-FROM eclipse-temurin:17.0.4.1_1-jre-alpine@sha256:e1506ba20f0cb2af6f23e24c7f8855b417f0b085708acd9b85344a884ba77767
+FROM eclipse-temurin:17.0.6_10-jre-jammy@sha256:592f2d372afeb13bc3c5a28e49c7ca6b5e5688e767cb0b9e21a70caaacfc4cec
 WORKDIR /opt/app
-RUN addgroup --system javauser && adduser -S -s /usr/sbin/nologin -G javauser javauser
+RUN addgroup --gid 1000 javauser && adduser javauser --shell /usr/sbin/nologin --gid 1000
 COPY --from=builder application/dependencies/ ./
 COPY --from=builder application/spring-boot-loader/ ./
 COPY --from=builder application/snapshot-dependencies/ ./
