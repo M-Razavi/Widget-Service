@@ -1,8 +1,12 @@
 FROM maven:3.8.6-eclipse-temurin-17-alpine@sha256:6a53f197f7bdfdf56e50c03cdb9f82a339ca3ded4eae867834e4bcfa7276a832 AS builder
 WORKDIR application
+RUN pwd
+RUN ls -la
 COPY pom.xml .
 COPY src src
-RUN mvn package -DskipTests
+RUN mvn clean package -DskipTests
+RUN pwd
+RUN ls -la
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
 RUN java -Djarmode=layertools -jar app.jar extract
