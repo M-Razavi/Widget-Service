@@ -5,7 +5,7 @@ RUN mvn package -DskipTests
 RUN pwd
 RUN ls
 RUN ls -la ./target
-COPY target/widget-service-0.0.1-SNAPSHOT.jar app.jar
+COPY target/widget-service-0.0.2-SNAPSHOT.jar app.jar
 RUN java -Djarmode=layertools -jar app.jar extract
 
 FROM eclipse-temurin:17.0.6_10-jre-jammy@sha256:592f2d372afeb13bc3c5a28e49c7ca6b5e5688e767cb0b9e21a70caaacfc4cec

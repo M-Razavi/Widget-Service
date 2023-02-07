@@ -10,7 +10,7 @@
     </parent>
     <groupId>net.mahdirazavi.sample</groupId>
     <artifactId>widget-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>Simple Widget Board</name>
     <description>A web service to work with widgets via HTTP REST API.The service stores only widgets, assuming that all
         clients work with
