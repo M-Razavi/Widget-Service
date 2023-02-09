@@ -1,0 +1,29 @@
+name: Jacoco coverage
+
+on: [ push, pull_request ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Test Coverage
+        run: mvn --batch-mode --update-snapshots clean test
+      - name: Add coverage to PR
+        id: jacoco
+        uses: madrapps/jacoco-report@v1.3
+        with:
+          paths: ${{ github.workspace }}/target/site/jacoco/jacoco.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 10
+          min-coverage-changed-files: 10
+      - name: Log coverage percentage
+        run: |
+          echo "coverage overall = ${{ steps.jacoco.outputs.coverage-overall }}"
+          echo "coverage changed files = ${{ steps.jacoco.outputs.coverage-changed-files }}"

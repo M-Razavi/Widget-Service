@@ -15,7 +15,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots clean package
+        run: mvn --batch-mode --update-snapshots clean package -DskipTests
       - name: Extract layers
         run: cp target/*.jar app.jar && java -Djarmode=layertools -jar app.jar extract
 
