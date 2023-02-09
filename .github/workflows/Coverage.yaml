@@ -1,4 +1,4 @@
-name: Jacoco coverage
+name: Coverage
 
 on: [ push, pull_request ]
 
@@ -23,6 +23,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           min-coverage-overall: 10
           min-coverage-changed-files: 10
+          title: Coverage
       - name: Log coverage percentage
         run: |
           echo "coverage overall = ${{ steps.jacoco.outputs.coverage-overall }}"

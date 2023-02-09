@@ -1,8 +1,9 @@
 # Widget service
-[![Build Status](https://travis-ci.com/M-Razavi/Widget-Service.svg?branch=main)](https://travis-ci.com/github/M-Razavi/Widget-Service)
-[![Coverage Status](https://coveralls.io/repos/github/M-Razavi/Widget-Service/badge.svg?branch=main)](https://coveralls.io/github/M-Razavi/Widget-Service?branch=main)
+[![Build Status](https://github.com/M-Razavi/Widget-Service/actions/workflows/SpringBootCI.yaml/badge.svg)](https://github.com/M-Razavi/Widget-Service/actions/workflows/SpringBootCI.yaml)
+[![Tests](https://github.com/M-Razavi/Widget-Service/actions/workflows/Coverage.yaml/badge.svg)](https://github.com/M-Razavi/Widget-Service/actions/workflows/Coverage.yaml)
 
-A web service to work with widgets on a board via HTTP REST API.The service stores only widgets and assuming that all clients work with the same board.
+A web service to work with widgets on a board via HTTP REST API.The service stores only widgets and assuming that all
+clients work with the same board.
 
 ### Glossary
 A Widget is an object on a plane in a Cartesian coordinate system that has coordinates (X, Y), Z-index, width, height, last modification date, and a unique identifier.   
