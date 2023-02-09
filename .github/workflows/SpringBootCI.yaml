@@ -32,7 +32,5 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: .
-          file: ./dockerfiles/Github_Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/widget-service:latest
