@@ -48,7 +48,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Extract jar layers
-        run: cp *.jar app.jar && java -Djarmode=layertools -jar app.jar extract
+        run: cp target/*.jar app.jar && java -Djarmode=layertools -jar app.jar extract
       - name: Bake Docker Image
         run: |
           docker build -t myimage:latest --progress=plain --no-cache .
