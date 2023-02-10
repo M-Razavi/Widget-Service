@@ -47,9 +47,16 @@ jobs:
           distribution: 'temurin'
       - name: Extract jar layers
         run: cp *.jar app.jar && java -Djarmode=layertools -jar app.jar extract
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          no-cache: true
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/widget-service:latest
+      - name: Bake Docker Image
+        run: |
+          docker build -t myimage:latest --progress=plain --no-cache .
+          docker image ls -a
+- name: Test
+        run: docker image ls -a
+
+      # - name: Build and push
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     no-cache: true
+      #     push: true
+      #     tags: ${{ secrets.DOCKERHUB_USERNAME }}/widget-service:latest
