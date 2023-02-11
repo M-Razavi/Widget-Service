@@ -1,0 +1,14 @@
+name: Deploy on fly.io
+on:
+  workflow_dispatch
+jobs:
+  deploy:
+    name: Deploy proxy
+    runs-on: ubuntu-latest
+    steps:
+      # check out repository and flyctl deploy
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --app widget-service --dockerfile ./other_dockerfiles/Dockerfile
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
