@@ -51,3 +51,4 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/widget-service:latest .
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/widget-service:latest
+          flyctl auth login && docker push registry.fly.io/widget-service
